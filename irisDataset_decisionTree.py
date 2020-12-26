@@ -27,12 +27,10 @@ training_data, testing_data = np.split(data, [int(0.9*len(data))])
 
 def class_counts(arr):
     """считает количество цветков каждого типа"""
-    counts = {}
-    for row in arr:
-        label = row[-1]
-        if label not in counts:
-            counts[label] = 0
-        counts[label] += 1
+    counts = {} 
+    unique, count = np.unique(arr[:,-1], return_counts=True)
+    for i in range(len(unique)):
+        counts[unique[i]] = count[i]
     return counts
 
 
@@ -52,17 +50,6 @@ class Question:
 
     def __repr__(self):
         return f"Is {header[self.column]} >= {str(self.value)}"
-
-
-def partition(arr, question):
-    """В соответствии с ответами на вопрос делит датасет на два помножества."""
-    true_arr, false_arr = [], []
-    for row in arr:
-        if question.match(row):
-            true_arr.append(row)
-        else:
-            false_arr.append(row)
-    return np.array(true_arr), np.array(false_arr)
 
 
 def gini(arr):
@@ -100,7 +87,8 @@ def find_best_split(arr):
             question = Question(col, val)
 
             # пытаемся разделить
-            true_arr, false_arr = partition(arr, question)
+            true_arr = arr[arr[:,col]>=val,:]
+            false_arr = arr[arr[:,col]<val,:]
 
             # Если хоть одно подмножество длины ноль, ищем другой вопрос
             if not len(true_arr)*len(false_arr):
@@ -141,7 +129,8 @@ def build_tree(arr):
     if gain == 0:
         return Leaf(arr)
 
-    true_arr, false_arr = partition(arr, question)
+    true_arr = arr[arr[:,question.column]>=question.value,:]
+    false_arr = arr[arr[:,question.column]<question.value,:]
 
     true_branch = build_tree(true_arr)
     false_branch = build_tree(false_arr)
