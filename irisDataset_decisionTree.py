@@ -55,12 +55,8 @@ class Question:
 def gini(arr):
     """Считает загрязнённость датасета. Для каждой метки находится
     вероятность того, что случайно выбранный элемент датасета имеет эту метку. """
-    counts = class_counts(arr)
-    impurity = 1
-    for label in counts:
-        probability_of_label = counts[label] / float(len(arr))
-        impurity -= probability_of_label**2
-    return impurity
+    _, count = class_counts(arr)
+    return 1 - np.sum((count/np.sum(count))**2)
 
 
 def info_gain(left, right, current_uncertainty):
@@ -201,7 +197,7 @@ def plot_tree(tree):
     X = [tree.arr[:, tree.question.column]]
     Y = [1 if tree.arr[i][-1] == 'setosa' else 3 if tree.arr[i]
          [-1] == 'virginica' else 5 for i in range(len(tree.arr))]
-    plt.title(tree.question.__repr__())
+    plt.title(repr(tree.question))
     plt.xlabel(header[tree.question.column])
     plt.ylabel('Вид цветка')
 
