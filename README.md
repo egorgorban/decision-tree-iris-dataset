@@ -2,4 +2,10 @@
 
 Jupiter notebook и .py файлы идентичны.
 
-Разработчики: @egorgorban @owario @pmikhail295 @spaikus
+Разработчики: 
+
+- Вячеслав Боев @spaikus
+- Егор Горбань @egorgorban
+- Марат Салихов @owario
+- Михаил Писегов @pmikhail295
+- Михаил Тимофеев @Michailaq
