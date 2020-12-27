@@ -8,4 +8,4 @@ Jupiter notebook и .py файлы идентичны.
 - Егор Горбань @egorgorban
 - Марат Салихов @owario
 - Михаил Писегов @pmikhail295
-- Михаил Тимофеев
+- Михаил Тимофеев @Michailaq
