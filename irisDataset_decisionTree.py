@@ -31,7 +31,7 @@ def class_counts(arr):
     unique, count = np.unique(arr[:,-1], return_counts=True)
     for i in range(len(unique)):
         counts[unique[i]] = count[i]
-    return counts
+    return counts, count
 
 
 header = ["sepal length", "sepal width", "petal length", "petal width"]
@@ -103,7 +103,7 @@ class Leaf:
     """Лист дерева. Хранит словарь {label: count_of_label}"""
 
     def __init__(self, arr):
-        self.predictions = class_counts(arr)
+        self.predictions, _ = class_counts(arr)
 
 
 class Decision_Node:
@@ -177,10 +177,7 @@ summa = 0
 for row in testing_data:
     predictions = classify(row, my_tree)
     print(f"Метка: {row[-1]}. Предполагаемая метка: {print_leaf(predictions)}")
-    cur_sum = 0
-    for pred in predictions.items():
-        if row[-1] == pred[0]:
-            cur_sum += pred[1]
+    cur_sum = predictions[row[-1]] if row[-1] in predictions else 0
     summa += cur_sum/float(sum(predictions.values()))
 print('Точность этого дерева:', summa/len(testing_data))
 
